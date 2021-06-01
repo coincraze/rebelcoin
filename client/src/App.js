@@ -9,6 +9,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import fileReaderPullStream from 'pull-file-reader';
 import ipfs from './ipfs' 
 import "./App.css";
+import Moment from "react-moment";
 
 const ipfsGatewayTools = require('@pinata/ipfs-gateway-tools');
 const pinataSDK = require('@pinata/sdk');
@@ -35,7 +36,15 @@ class App extends Component {
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance }, this.runExample);
+      this.setState({ web3, accounts, contract: instance }, this.getFiles);
+
+      
+      window.ethereum.on('accountsChanged', async () =>  {
+        const changedAccounts = await web3.eth.getAccounts();
+        this.setState({accounts:changedAccounts});
+        this.getFiles();
+      })
+      
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -48,11 +57,12 @@ class App extends Component {
   
   getFiles = async () => {
     try {
-      const { account, contract } = this.state;
-      let filesLength = await contract.methods.getLength().call({from: account[0]});
+      debugger;
+      const { accounts, contract } = this.state;
+      let filesLength = await contract.methods.getLength().call({from: accounts[0]}); 
       let files = [];
-      for (let i=0;i < files.length;i++) {
-        let file = await contract.method.getFiles(i).call({from: account[0]});
+      for (let i=0;i < filesLength; i++) {
+        let file = await contract.methods.getFiles(i).call({from: accounts[0]});
         files.push(file);
       }
       this.setState({ipfsDrive: files});
@@ -63,10 +73,15 @@ class App extends Component {
 
   onDrop = async (file) => {
     try {
-      const { account, contract } = this.state;
+      const { accounts, contract } = this.state;
       const stream = fileReaderPullStream(file);
       const result = await ipfs.add(stream);
+      const timestamp = Math.round(+new Date() / 1000);
+      const type = file.name.substr(file.name.lastIndexOf(".")+1);
+      let uploaded = await contract.methods.add(result[0].hash, file.name, type, timestamp).send({from: accounts[0], gas: 300000});
+      console.log(uploaded);
       debugger;
+      this.getFiles(); 
     } catch (error) {
       console.log(error);
     }
@@ -74,6 +89,7 @@ class App extends Component {
   } 
 
   render() {
+    const {ipfsDrive} = this.state;
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
@@ -90,11 +106,20 @@ class App extends Component {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th><FileIcon size={30} extension="docx" {...defaultStyles.docx} /></th>
-                <th className="text-left">File Name.docx</th>
-                <th className="text-right">2021//6/1</th>
+              { ipfsDrive !== [] ?  ipfsDrive.map((item, key)=>(
+              <tr>    
+                <th><FileIcon 
+                      size={30} 
+                      extension={item[2]} 
+                      {...defaultStyles[item[2]]} 
+                      />
+                </th>
+                <th className="text-left"><a href={"https://ipfs.io/ipfs/"+item[0]}>{item[1]}</a></th>
+                <th className="text-right">
+                  <Moment format="MM/DD/YYYY" unix>{item[3]}</Moment>
+                </th>
               </tr>
+            ))  : null}
             </tbody>
           </Table>
         </div>
