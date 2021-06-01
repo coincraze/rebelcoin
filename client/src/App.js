@@ -6,8 +6,13 @@ import { Table } from 'reactstrap';
 import { FileIcon, defaultStyles } from 'react-file-icon';
 import "react-drop-zone/dist/styles.css";
 import "bootstrap/dist/css/bootstrap.css";
- 
+import fileReaderPullStream from 'pull-file-reader';
+import ipfs from './ipfs' 
 import "./App.css";
+
+const ipfsGatewayTools = require('@pinata/ipfs-gateway-tools');
+const pinataSDK = require('@pinata/sdk');
+const pinata = pinataSDK('6e1da302fb6acf836874', '05b224469b589e1e25970e61b52725a632bb4bcbeafdcad678f077ac94b9a6db');
 
 class App extends Component {
   state = { ipfsDrive: [], web3: null, accounts: null, contract: null };
@@ -42,12 +47,29 @@ class App extends Component {
   
   
   getFiles = async () => {
-      
-      
+    try {
+      const { account, contract } = this.state;
+      let filesLength = await contract.methods.getLength().call({from: account[0]});
+      let files = [];
+      for (let i=0;i < files.length;i++) {
+        let file = await contract.method.getFiles(i).call({from: account[0]});
+        files.push(file);
+      }
+      this.setState({ipfsDrive: files});
+    } catch (error) {
+      console.log(error); 
+    }
   } 
 
-  onDrop = async () => {
-      
+  onDrop = async (file) => {
+    try {
+      const { account, contract } = this.state;
+      const stream = fileReaderPullStream(file);
+      const result = await ipfs.add(stream);
+      debugger;
+    } catch (error) {
+      console.log(error);
+    }
       
   } 
 
@@ -58,7 +80,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container pt-3">
-          <StyledDropZone />
+          <StyledDropZone onDrop={this.onDrop} />
           <Table>
             <thead>
               <tr>
