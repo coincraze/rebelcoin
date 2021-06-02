@@ -11,7 +11,6 @@ import ipfs from './ipfs'
 import "./App.css";
 import Moment from "react-moment";
 
-const ipfsGatewayTools = require('@pinata/ipfs-gateway-tools');
 const pinataSDK = require('@pinata/sdk');
 const pinata = pinataSDK('6e1da302fb6acf836874', '05b224469b589e1e25970e61b52725a632bb4bcbeafdcad678f077ac94b9a6db');
 
@@ -57,7 +56,6 @@ class App extends Component {
   
   getFiles = async () => {
     try {
-      debugger;
       const { accounts, contract } = this.state;
       let filesLength = await contract.methods.getLength().call({from: accounts[0]}); 
       let files = [];
@@ -78,9 +76,25 @@ class App extends Component {
       const result = await ipfs.add(stream);
       const timestamp = Math.round(+new Date() / 1000);
       const type = file.name.substr(file.name.lastIndexOf(".")+1);
-      let uploaded = await contract.methods.add(result[0].hash, file.name, type, timestamp).send({from: accounts[0], gas: 300000});
-      console.log(uploaded);
+      const fileName = file.name.substring(file.name.lastIndexOf('/')+1, file.name.lastIndexOf('.'));
+      const hash = result[0].hash;
       debugger;
+      
+      const pinataOptions = {
+          pinataMetadata: {
+            name: fileName
+          }
+      };
+      
+      pinata.pinByHash(hash, pinataOptions).then((result) => {
+          //handle
+          console.log(result);
+      }).catch((err) => {
+          //handle error here
+          console.log(err);
+      });
+      let uploaded = await contract.methods.add(hash, file.name, type, timestamp).send({from: accounts[0], gas: 300000});
+      console.log(uploaded);
       this.getFiles(); 
     } catch (error) {
       console.log(error);
