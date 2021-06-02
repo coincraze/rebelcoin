@@ -76,7 +76,7 @@ class App extends Component {
       const result = await ipfs.add(stream);
       const timestamp = Math.round(+new Date() / 1000);
       const type = file.name.substr(file.name.lastIndexOf(".")+1);
-      const fileName = file.name.substring(file.name.lastIndexOf('/')+1, file.name.lastIndexOf('.'));
+      const fileName = file.name;
       const hash = result[0].hash;
       debugger;
       
