@@ -1,7 +1,7 @@
 var IPFSDrive = artifacts.require("./IPFSDrive.sol");
-var UniqueNFT = artifacts.require("./UniqueNFT.sol");
+var UniqueNFT = artifacts.require("./DeStor.sol");
 
 module.exports = function(deployer) {
   deployer.deploy(IPFSDrive);
-  deployer.deploy(UniqueNFT);
+  deployer.deploy(DeStor);
 };
