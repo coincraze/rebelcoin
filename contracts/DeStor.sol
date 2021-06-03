@@ -4,22 +4,32 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 
-contract DeStor is ERC20, ERC20Burnable, Pausable, Ownable {
+contract DeStor is ERC20, ERC20Burnable, Pausable, AccessControl {
+    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+    uint256 private _totalSupply;
+    
     constructor() ERC20("DeStor", "DST") {
-        _mint(msg.sender, 20000 * 10 ** decimals());
-    }
+        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _setupRole(PAUSER_ROLE, msg.sender);
+        _setupRole(MINTER_ROLE, msg.sender);
+        _totalSupply = 2000000000 * 10 ** decimals();
+    }     
 
-    function pause() public onlyOwner {
+    function pause() public {
+        require(hasRole(PAUSER_ROLE, msg.sender));
         _pause();
     }
 
-    function unpause() public onlyOwner {
+    function unpause() public {
+        require(hasRole(PAUSER_ROLE, msg.sender));
         _unpause();
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mint(address to, uint256 amount) public {
+        require(hasRole(MINTER_ROLE, msg.sender));
         _mint(to, amount);
     }
 

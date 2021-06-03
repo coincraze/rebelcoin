@@ -61,7 +61,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -74,7 +75,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.4+commit.c7e474f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_hash\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_fileName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_fileType\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_date\",\"type\":\"uint256\"}],\"name\":\"add\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"}],\"name\":\"getFiles\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getLength\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/rmcmahan/blockchain/ipfs-drive/contracts/IPFSDrive.sol\":\"IPFSDrive\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/rmcmahan/blockchain/ipfs-drive/contracts/IPFSDrive.sol\":{\"keccak256\":\"0x01cfd7d220d0af3475c94dbfd87ecf6677c4ec5beff070739173d2a6b4d578dd\",\"urls\":[\"bzz-raw://2081f0b6bc97572720dd739786a86bf6004719c9442655896163c197f282ce6c\",\"dweb:/ipfs/QmdLMKA3fFMcxSQL54TjFZhWnZYYp19uBjaVqXt9RX7PgC\"]}},\"version\":1}",
@@ -6096,12 +6098,13 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xF74a971a976626cA24E05a36fe5Ccc1d5e21F0d2",
-      "transactionHash": "0xb45a15b40bf4d49f06a11cc0a2b9163cb8ca17a4675808247d81b9099e4d7535"
+      "address": "0xC1aEa1E7A3dB4B75FBCF9ADD63daD9FB453D860f",
+      "transactionHash": "0x72e0e3e4d9fd7da184fae36c8301b30a128557173ee06780a1f6178c2428397b"
     }
   },
   "schemaVersion": "3.4.1",
-  "updatedAt": "2021-06-02T22:07:45.136Z",
+  "updatedAt": "2021-06-03T21:52:10.299Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},
