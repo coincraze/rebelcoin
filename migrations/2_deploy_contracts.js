@@ -1,7 +1,7 @@
 var IPFSDrive = artifacts.require("./IPFSDrive.sol");
-var DeStor = artifacts.require("./DeStor.sol");
+var DSNet = artifacts.require("./DSNet.sol");
 
 module.exports = function(deployer) {
   deployer.deploy(IPFSDrive);
-  deployer.deploy(DeStor);
+  deployer.deploy(DSNet);
 };
