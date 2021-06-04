@@ -11,11 +11,12 @@ contract DSNet is ERC20, ERC20Burnable, Pausable, AccessControl {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     uint256 private _totalSupply;
     
-    constructor() ERC20("DSNet", "DSN") {
+    constructor() ERC20("DSNet", "DSNT") {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _setupRole(PAUSER_ROLE, msg.sender);
         _setupRole(MINTER_ROLE, msg.sender);
         _totalSupply = 2000000000 * 10 ** decimals();
+        _mint(msg.sender, _totalSupply);
     }     
 
     function pause() public {

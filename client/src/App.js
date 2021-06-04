@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import IPFSDrive from "./contracts/IPFSDrive.json";
+import DSNet from "./contracts/DSNet.json";
 import getWeb3 from "./getWeb3"; 
 import { StyledDropZone } from 'react-drop-zone';
 import { Table } from 'reactstrap';
@@ -28,14 +29,19 @@ class App extends Component {
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = IPFSDrive.networks[networkId];
-      const instance = new web3.eth.Contract(
+      const driveInstance = new web3.eth.Contract(
         IPFSDrive.abi,
+        deployedNetwork && deployedNetwork.address,
+      );
+      
+      const dsnetTokenInstance = new web3.eth.Contract(
+        DSNet.abi,
         deployedNetwork && deployedNetwork.address,
       );
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance }, this.getFiles);
+      this.setState({ web3, accounts, contract: driveInstance }, this.getFiles);
 
       
       window.ethereum.on('accountsChanged', async () =>  {
