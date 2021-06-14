@@ -1,19 +1,19 @@
-const DSNet = artifacts.require("./DSNet.sol");
+const CSDC = artifacts.require("./CSDC.sol");
 
 require('chai')
 .should();
 
-contract("DSNet", accounts => {
+contract("CSDC", accounts => {
   
   beforeEach(async function() {
-    this.token = await DSNet.new();
+    this.token = await CSDC.new();
   });
   
   describe('token attributes', function() {
     
     it('has the right name', async function() {
       const name = await this.token.name();
-      name.should.equal('DSNet');
+      name.should.equal('CSDC');
     });
     
   });

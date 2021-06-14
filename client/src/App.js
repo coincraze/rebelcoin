@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import IPFSDrive from "./contracts/IPFSDrive.json";
-import DSNet from "./contracts/DSNet.json";
+import CSDC from "./contracts/CSDC.json";
 import getWeb3 from "./getWeb3"; 
 import { StyledDropZone } from 'react-drop-zone';
 import { Table } from 'reactstrap';
@@ -34,8 +34,8 @@ class App extends Component {
         deployedNetwork && deployedNetwork.address,
       );
       
-      const dsnetTokenInstance = new web3.eth.Contract(
-        DSNet.abi,
+      const CSDCTokenInstance = new web3.eth.Contract(
+        CSDC.abi,
         deployedNetwork && deployedNetwork.address,
       );
 

@@ -1,7 +1,7 @@
 var IPFSDrive = artifacts.require("./IPFSDrive.sol");
-var DSNet = artifacts.require("./DSNet.sol");
+var CSDC = artifacts.require("./CSDC.sol");
 
 module.exports = function(deployer) {
   deployer.deploy(IPFSDrive);
-  deployer.deploy(DSNet);
+  deployer.deploy(CSDC);
 };
