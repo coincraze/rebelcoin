@@ -12,17 +12,14 @@ contract("CSDCTreasury", accounts => {
     it('inializes CSDCTreasury contract with correct values', async function() {
       return CSDCTreasury.deployed().then(function(instance) {
         treasuryInstance = instance;
-        return treasuryInstance.treasuryAddress
-      }).then(function(address){
-        assert.notEqual(address, 0x0, 'has treasury contract address')
-        return treasuryInstance.tokenContract  
-      }).then(function(address){
-        assert.notEqual(address, 0x0, 'has token contact address')
-        return treasuryInstance.gasFee
-      }).then(function(fee){
-        assert.notEqual(fee, 0, 'has gas fee')
-    });
-      
+        treasuryAddress = treasuryInstance.treasuryAddress
+        tokenContract = treasuryInstance.tokenContract 
+        gasFee = treasuryInstance.gasFee
+        assert.notEqual(treasuryAddress, 0x0, 'has treasury contract address')
+        assert.notEqual(tokenContract, 0x0, 'has token contact address')
+        assert.notEqual(tokenContract, treasuryAddress, 'treasury address and token address are different')
+        assert.notEqual(gasFee, 0, 'has gas fee')
+      });
       
   });
   
