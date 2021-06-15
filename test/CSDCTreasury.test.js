@@ -12,7 +12,7 @@ contract("CSDCTreasury", accounts => {
     it('inializes CSDCTreasury contract with correct values', async function() {
       return CSDCTreasury.deployed().then(function(instance) {
         treasuryInstance = instance;
-        treasuryAddress = treasuryInstance.treasuryAddress
+        treasuryAddress = treasuryInstance.address
         tokenContract = treasuryInstance.tokenContract 
         gasFee = treasuryInstance.gasFee
         assert.notEqual(treasuryAddress, 0x0, 'has treasury contract address')

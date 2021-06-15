@@ -5,13 +5,11 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 
 contract CSDCTreasury {
   address admin;
-  address public treasuryAddress;
   CSDC public tokenContract;
   uint256 public gasFee;
   address[] reservations;
   
   constructor(CSDC _tokenContract) {
-    treasuryAddress = address(this);
     admin = msg.sender;
     tokenContract = _tokenContract;
     gasFee = 20000000000000000;
