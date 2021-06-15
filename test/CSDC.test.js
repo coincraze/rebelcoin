@@ -13,7 +13,7 @@ contract("CSDC", accounts => {
     
     it('has the right name', async function() {
       const name = await this.token.name();
-      name.should.equal('CSDC');
+      name.should.equal('Confederacy Coin');
     });
     
   });
